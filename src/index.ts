@@ -1,3 +1,11 @@
-export type Op={offset:number;opcode:number,operand?:number};
-export function decode(code:Uint8Array){const out:Op[]=[];for(let at=0;at<code.length;){const opcode=code[at++];if(opcode===1){if(at>=code.length)throw new Error('truncated');out.push({offset:at-1,opcode,operand:code[at++]})}else out.push({offset:at-1,opcode})}return out}
-export function boundaries(code:Uint8Array){return new Set(decode(code).map(op=>op.offset))}
+export type { Op, Program, ExRange, DebugEntry, CostTable, MeterResult } from './types.js';
+export { MeterError } from './types.js';
+export * from './opcodes.js';
+export { decode, boundaries, emptyProgram } from './decoder.js';
+export { buildCFG, computeLeaders } from './cfg.js';
+export type { Block, Cfg } from './cfg.js';
+export { meter, isMetered } from './meter.js';
+export { unsignedLebSize } from './opcodes.js';
+export type { MeterOptions } from './meter.js';
+export { run } from './vm.js';
+export type { RunOptions, RunResult, RunStatus } from './vm.js';
